@@ -1,0 +1,8 @@
+1. Singleton: LibraryCatalog
+Wzorzec Singleton zapewnia, że w systemie istnieje tylko jedna instancja klasy LibraryCatalog. Dzięki temu wszystkie operacje związane z książkami (dodawanie, usuwanie, wyszukiwanie) odbywają się na wspólnej liście książek.
+2. Adapter: BookDataAdapter
+Adapter umożliwia wczytywanie danych o książkach z różnych formatów (JSON, CSV, XML) i przekształcanie ich na wspólny format, czyli listę tytułów książek.
+3. Factory: UserFactory
+Fabryka UserFactory umożliwia tworzenie obiektów różnych typów użytkowników systemu (Student, Teacher, Librarian), przydzielając im odpowiednie uprawnienia.
+4. Observer: Powiadamianie użytkowników
+Klasa LibraryCatalog pełni rolę podmiotu, a użytkownicy (Student, Teacher, Librarian) są obserwatorami. System powiadamia użytkowników o zmianach w katalogu, np. dodaniu lub usunięciu książki.
