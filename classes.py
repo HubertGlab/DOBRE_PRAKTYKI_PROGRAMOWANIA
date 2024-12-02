@@ -1,4 +1,5 @@
-from interface import *
+from interface import TransactionResult, NetworkException, PaymentException, TransactionStatus
+
 
 class PaymentProcessor:
     def __init__(self):

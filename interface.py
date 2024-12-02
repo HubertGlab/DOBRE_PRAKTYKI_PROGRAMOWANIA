@@ -58,3 +58,4 @@ class PaymentGateway:
         if random.choice([True, False]):
             raise NetworkException("Network error retrieving status")
         return random.choice([TransactionStatus.PENDING, TransactionStatus.COMPLETED, TransactionStatus.FAILED])
+    
