@@ -22,16 +22,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pylint
+          pip install pylint black flake8 isort
+
+      - name: Lint Python files with pylint
+        run: |
+          pylint interface.py classes.py tests.py
+
+      - name: Lint Python files with black and isort
+        run: |
+          black --check .
+          isort --check-only .
 
       - name: Run SuperLinter
         uses: github/super-linter@v4
         env:
           RUN_LOCAL: true
-
-      - name: Lint Python files with pylint
-        run: |
-          pylint interface.py classes.py tests.py
+          VALIDATE_PYTHON_PYLINT: true
 
   test:
     runs-on: ubuntu-latest
@@ -47,9 +53,13 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest pytest-cov coverage
 
       - name: Run unit tests with coverage
         run: |
-          pytest --cov=interface --cov=classes --cov-report=term-missing
-          coverage html
+          pytest --cov=. --cov-report=term-missing --cov-report=html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: htmlcov
