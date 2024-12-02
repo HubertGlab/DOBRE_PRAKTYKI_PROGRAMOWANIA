@@ -1,4 +1,4 @@
-name: Super-Linter and Tests
+name: CI Pipeline
 
 on:
   push:
@@ -10,15 +10,46 @@ on:
 
 jobs:
   lint:
-    name: Run Super-Linter
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v5
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install pylint
+
+      - name: Run SuperLinter
+        uses: github/super-linter@v4
         env:
-          VALIDATE_PYTHON_PYLINT: true
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_LOCAL: true
+
+      - name: Lint Python files with pylint
+        run: |
+          pylint interface.py classes.py tests.py
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov coverage
+
+      - name: Run unit tests with coverage
+        run: |
+          pytest --cov=interface --cov=classes --cov-report=term-missing
+          coverage html
