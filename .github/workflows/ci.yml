@@ -24,14 +24,14 @@ jobs:
         run: |
           pip install pylint black flake8 isort
 
-      - name: Lint Python files with pylint
-        run: |
-          pylint interface.py classes.py tests.py
+      # - name: Lint Python files with pylint
+      #   run: |
+      #     pylint interface.py classes.py tests.py
 
-      - name: Lint Python files with black and isort
-        run: |
-          black --check .
-          isort --check-only .
+      # - name: Lint Python files with black and isort
+      #   run: |
+      #     black --check .
+      #     isort --check-only .
 
       - name: Run SuperLinter
         uses: github/super-linter@v4
